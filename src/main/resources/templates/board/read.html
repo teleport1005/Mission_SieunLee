@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+<header>
+    <div class="header-bg">
+        <a href="/article/home" class="header-link">
+            <div class="row">
+                💈 익명 게시판
+            </div>
+        </a>
+    </div>
+</header>
+
+<div class="board-content">
+    <h3 th:text="'🎱 ' + ${board.category}">
+    </h3>
+    <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${board.description}"></span>
+    <div class="button-container">
+        <button th:onclick="|window.location.href='/article/write-view/${board.id}'|" >글쓰기</button>
+    </div>
+    <hr>
+    <div th:if="${not #lists.isEmpty(board.articleList)}">
+        <ul>
+            <li th:each="article : ${board.articleList}">
+                <div class="article-title-box" th:onclick="|window.location.href='/article/read/${article.id}'|">
+                    <p>
+                        <span style="font-size: 80%;" th:text="'000' + ${article.id}"></span>
+                        <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${board.category}"></span>
+                        <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${article.postType.postType}"></span>
+                        <a th:text="${article.title}">[[${article.title}]]</a>
+
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${#lists.isEmpty(articles)}">
+        <p>작성된 게시글이 없습니다.</p>
+    </div>
+    <hr>
+    <button onclick="window.history.go(-1);">뒤로가기</button>
+</div>
+
+</body>
+</html>

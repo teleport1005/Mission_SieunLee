@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Article Read Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+<header>
+    <div class="header-bg">
+        <a href="/article/home" class="header-link">
+            <div class="row">
+                💈 익명 게시판
+            </div>
+        </a>
+    </div>
+</header>
+<h3 th:text="'🎱 '+${article.board.category}"></h3>
+<hr>
+<span style="font-size: 80%; color: rgb(128,128,128);"  th:text="${article.postType.postType}"></span>
+<span th:text="${article.title}">[[${article.title}]]</span>
+<hr>
+<div class="contentBox">
+<pre th:text="${article.contents}">[[${article.contents}]]</pre>
+</div>
+<hr>
+<button id="editButton" th:text="'수정'" th:onclick="|window.location.href='/article/${article.id}/edit'|"></button>
+<button id="deleteButton" th:text="'삭제'" th:onclick="|window.location.href='/article/${article.id}/delete'|"></button>
+<hr>
+<button onclick="window.history.go(-1);">뒤로가기</button>
+
+<h3>[Comment]</h3>
+<div th:if="${#lists.isEmpty(article.commentList)}">
+    <p style="font-size: 80%">아직 댓글이 없습니다</p>
+</div>
+<div th:unless="${#lists.isEmpty(article.commentList)}">
+    <ul>
+        <li th:each="list : ${article.commentList}">
+            <div class="comment-box">
+                <div class="comment-content">
+                <span th:text="${list.content}">[[${list.content}]]</span>
+                </div>
+                <div class="comment-buttons">
+                    <button th:onclick="|window.location.href='/article/read/${article.id}/comment/${list.id}/edit'|">수정</button>
+                    <!-- 삭제 버튼 -->
+                    <button th:onclick="|window.location.href='/article/read/${article.id}/comment/${list.id}/delete'|">삭제</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<hr>
+<div class="comment-edit-box">
+    <div class="comment-edit-content">
+    <form th:action="@{'/article/read/' + ${article.id} + '/comment'}" method="post">
+        <label for="content">
+            <textarea class="contentTextarea" placeholder="댓글을 입력하세요." required id="content" name="content"></textarea>
+        </label>
+        <label for="password">
+            <input id="password" name="password" type="password" placeholder="비밀번호를 입력하세요." required>
+        </label>
+        <div class="button-container">
+            <input type="submit" value="저장">
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</html>
+

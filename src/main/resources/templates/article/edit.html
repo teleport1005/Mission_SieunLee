@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Article Write-view</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+<header>
+    <div class="header-bg">
+        <a href="/article/home" class="header-link">
+            <div class="row">
+                💈 익명 게시판
+            </div>
+        </a>
+    </div>
+</header>
+
+<div>
+    <form th:action="@{/article/{id}/edit(id=${article.id})}" method="post">
+        <label>
+            <select name="board-id">
+                <option value="" selected></option>
+                <option th:each="board : ${board}"
+                        th:value="${board.id}"
+                        th:selected="${board.id == article.board.id}">
+                    [[${board.category}]]
+                </option>
+            </select>
+        </label>
+        <label>
+            <select name="post-id">
+                <option value="" selected></option>
+                <option th:each="postTypes : ${postType}"
+                        th:value="${postTypes.id}"
+                        th:selected="${postTypes.id == article.postType.id}">
+                    [[${postTypes.postType}]]
+                </option>
+            </select>
+        </label>
+        <hr>
+        <hr>
+        <label for="title">
+            <textarea class="titleTextarea" placeholder="제목을 입력하세요." required id="title" name="title" th:text="${article.title}"></textarea>
+        </label>
+
+        <label for="contents">
+            <textarea class="contentTextarea" placeholder="내용을 입력하세요" required id="contents" name="contents" th:text="${article.contents}"></textarea>
+        </label>
+        <br>
+        <label for="password">
+            <input id="password" name="password" type="password" placeholder="비밀번호를 입력하세요." required>
+        </label>
+        <br>
+        <div class="button-container">
+            <button onclick="window.history.go(-1);">취소</button>
+            <input type="submit" value="저장">
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

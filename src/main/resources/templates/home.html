@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+<header>
+    <div class="header-bg">
+        <a href="/article/home" class="header-link">
+        <div class="row">
+        💈 익명 게시판
+        </div>
+        </a>
+    </div>
+</header>
+
+<h2>전체글 <span th:text="'[' + ${articleCount} + ']'"></span> </h2>
+<div th:if="${#lists.isEmpty(article)}">
+    <p>작성된 게시글이 없습니다.</p>
+</div>
+<div th:unless="${#lists.isEmpty(article)}">
+    <ul>
+        <li th:each="item : ${article}">
+            <div class="article-title-box" th:onclick="|window.location.href='/article/read/${item.id}'|">
+                <p>
+                    <span style="font-size: 80%;" th:text="'000' + ${item.id}"></span>
+                    <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${item.board.category}"></span>
+                    <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${item.postType.postType}"></span>
+                    <a th:text="${item.title}">[[${item.title}]]</a>
+                </p>
+            </div>
+        </li>
+    </ul>
+</div>
+<hr>
+
+<div class="board-box">
+<div th:each="board : ${boards}" class="board-categories">
+    <button id="boardButton" th:text="'🎱 ' + ${board.category}" th:onclick="|window.location.href='/board/read/${board.id}'|"></button>
+    <div th:if="${#lists.isEmpty(board.articleList)}">
+        <p>작성된 게시글이 없습니다.</p>
+    </div>
+    <div th:unless="${#lists.isEmpty(board.articleList)}">
+        <ul>
+            <li th:each="article : ${board.articleList}">
+                <div class="article-title-box" th:onclick="|window.location.href='/article/read/${article.id}'|">
+                    <p>
+                        <span style="font-size: 80%;" th:text="'000' + ${article.id}"></span>
+                        <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${board.category}"></span>
+                        <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${article.postType.postType}"></span>
+                        <a th:text="${article.title}">[[${article.title}]]</a>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <hr>
+</div>
+</div>
+</body>
+</html>

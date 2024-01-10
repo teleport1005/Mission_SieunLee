@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Article</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+<header>
+  <div class="header-bg">
+    <a href="/article/home" class="header-link">
+      <div class="row">
+        <h1>🎰 익명 게시판</h1>
+      </div>
+    </a>
+  </div>
+</header>
+<h3 th:text="${article.board.category}"></h3>
+<hr>
+<span style="font-size: 80%; color: rgb(128,128,128);"  th:text="${article.postType.postType}"></span>
+<span style="font-size: 110%" th:text="${article.title}">[[${article.title}]]</span>
+<hr>
+<div th:text="${article.contents}">[[${article.contents}]]</div>
+<hr>
+<form th:action="@{/article/{id}/delete(id=${article.id})}" method="post">
+  <label for="password">
+    <input id="password" name="password" type="password" placeholder="비밀번호를 입력하세요." required>
+  </label>
+  <br>
+  <div class="button-container">
+    <button onclick="window.history.go(-1);">취소</button>
+    <input type="submit" value="삭제">
+  </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+<header>
+    <div class="header-bg">
+        <a href="/article/home" class="header-link">
+            <div class="row">
+                💈 익명 게시판
+            </div>
+        </a>
+    </div>
+</header>
+<h3 th:text="${article.board.category}"></h3>
+<hr>
+<span style="font-size: 80%; color: rgb(128,128,128);"  th:text="${article.postType}"></span>
+<span th:text="${article.title}">[[${article.title}]]</span>
+<hr>
+
+<pre th:text="${article.contents}">[[${article.contents}]]</pre>
+<hr>
+<button id="editButton" th:text="'수정'" th:onclick="|window.location.href='/article/${article.id}/edit'|"></button>
+<button id="deleteButton" th:text="'삭제'" th:onclick="|window.location.href='/article/${article.id}/delete'|"></button>
+<hr>
+
+<h3>[Comment]</h3>
+<div th:unless="${#lists.isEmpty(article.commentList)}">
+            <div class="comment-edit-box">
+                <div class="comment-edit-content">
+                    <form th:action="@{'/article/read/' + ${article.id} + '/comment/' + ${comment.id} + '/edit'}" method="post">
+                    <label for="content">
+                            <textarea class="contentTextarea" placeholder="댓글을 입력하세요." required id="content" name="content" th:text="${comment.content}"></textarea>
+                        </label>
+                        <label for="password">
+                            <input id="password" name="password" type="password" placeholder="비밀번호를 입력하세요." required>
+                        </label>
+                        <div class="comment-buttons">
+                            <br>
+                            <div class="button-container">
+                                <button onclick="window.history.go(-1);">취소</button>
+                                <input type="submit" value="저장">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+</div>
+</body>
+</html>
