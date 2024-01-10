@@ -1,5 +1,6 @@
 package com.example.forum;
 
+import com.example.forum.dto.ArticleDto;
 import com.example.forum.entity.Article;
 import com.example.forum.entity.Board;
 import com.example.forum.entity.PostType;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,12 +29,17 @@ public class ArticleController {
     ) {
 
         Board board = boardService.readBoard(boardId);
-        model.addAttribute("boardId", boardId);
-        model.addAttribute("board", board);
         List<PostType> postTypes = postTypeService.readAllPostType();
+
+        ArticleDto articleDto = new ArticleDto();
+        articleDto.setBoardId(boardId);
+
+        model.addAttribute("board", board);
         model.addAttribute("postTypes", postTypes);
+        model.addAttribute("boardId", articleDto);
         return "article/write";
     }
+
 
     @PostMapping("write/{boardId}")
     public String write(

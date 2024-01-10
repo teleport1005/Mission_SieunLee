@@ -2,10 +2,12 @@ package com.example.forum.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +23,6 @@ public class Comment {
     @Setter
     @ManyToOne
     private Article article;
-
-    public Comment() {
-    }
-
-    public Comment(String content, Article article) {
-        this.content = content;
-        this.article = article;
-    }
 
 
 }

@@ -13,10 +13,9 @@ public class CommentDto {
     private Long id;
     @Setter
     private String content;
-    @Setter
-    private Long password;
 
-    public CommentDto(String comment, String password) {
+
+    public CommentDto(String comment) {
     }
 
     public static CommentDto fromEntity(Comment entity) {

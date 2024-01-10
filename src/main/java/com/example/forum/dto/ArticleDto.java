@@ -1,5 +1,6 @@
 package com.example.forum.dto;
 
+import com.example.forum.entity.Article;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,17 +17,30 @@ public class ArticleDto {
     private Long id;
     private String title;
     private String contents;
-    private String username;
     private Long boardId;
-    private String password;
 
-    private final List<CommentDto> commentDtoList = new ArrayList<>();
+    private List<CommentDto> commentDtoList = new ArrayList<>();
 
-    public ArticleDto(String title, String contents, String username, String password) {
+    public ArticleDto(Long id, String title, String contents, Long boardId) {
+        this.id = id;
         this.title = title;
         this.contents = contents;
-        this.username = username;
-        this.password = password;
+        this.boardId = boardId;
+    }
+
+    public ArticleDto(String title, String contents, Long boardId) {
+        this.title = title;
+        this.contents = contents;
+        this.boardId = boardId;
+    }
+
+    public static ArticleDto fromEntity(Article article) {
+        ArticleDto dto = new ArticleDto();
+        dto.id = article.getId();
+        dto.title = article.getTitle();
+        dto.contents = article.getContents();
+        dto.commentDtoList = new ArrayList<>();
+        return dto;
     }
 }
 

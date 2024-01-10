@@ -1,5 +1,6 @@
 package com.example.forum;
 
+import com.example.forum.dto.ArticleDto;
 import com.example.forum.entity.Article;
 import com.example.forum.entity.Board;
 import com.example.forum.entity.PostType;
@@ -18,6 +19,8 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final BoardRepository boardRepository;
     private final PostTypeRepository postTypeRepository;
+
+
 
 
     public void write(
@@ -59,17 +62,14 @@ public class ArticleService {
     }
 
     public void deleteArticle(Long id, String password) {
-        Optional<Article> optionalArticle = articleRepository.findById(id);
-        if (optionalArticle.isPresent()) {
-            Article target = optionalArticle.get();
-            if (target.getPassword().equals(password)) {
-                articleRepository.deleteById(id);
-
-            } else {
-                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-            }
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+        if (!article.getPassword().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+        articleRepository.deleteById(id);
     }
+
 
     public Article readOneArticle(Long id) {
         Optional<Article> optionalArticle = articleRepository.findById(id);
@@ -88,5 +88,6 @@ public class ArticleService {
     public Long getTotalArticleCount() {
         return articleRepository.count();
     }
+
 }
 

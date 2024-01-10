@@ -2,12 +2,14 @@ package com.example.forum.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class PostType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +25,4 @@ public class PostType {
     @Setter
     private Board board;
 
-    public PostType() {
-    }
-
-    public PostType(Long id, String postType, List<Article> articles) {
-        this.id = id;
-        this.postType = postType;
-        this.articles = articles;
-    }
 }

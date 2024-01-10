@@ -2,6 +2,7 @@ package com.example.forum.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +28,4 @@ public class Board {
     private List<PostType> postTypeList;
 
 
-    public Board(Long id, String category, List<Article> articleList) {
-        this.id = id;
-        this.category = category;
-        this.articleList = articleList;
-    }
-
-    public Board() {
-    }
 }

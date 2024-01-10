@@ -60,14 +60,14 @@ public class CommentService {
     }
 
     public void deleteComment(Long id, String password) {
-        Optional<Comment> optionalComment = commentRepository.findById(id);
-        if (optionalComment.isPresent()) {
-            Comment comment = optionalComment.get();
-            if (comment.getPassword().equals(password)) {
-                commentRepository.deleteById(id);
-            } else {
-                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-            }
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
+
+        if (!comment.getPassword().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+
+        commentRepository.deleteById(id);
     }
+
 }
