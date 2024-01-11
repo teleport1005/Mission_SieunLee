@@ -196,10 +196,11 @@
   어차피 board별 말머리를 따로 주고 싶었기 때문에 OneToMany로 추가,  
   이후 구현했던 로직을 수정하며 thymeleaf도 복습한 셈이 되었다  
   테이블을 구성하고 클래스를 작성할 때에 어떤 식으로 생각하고 접근해야 하는지 조금은 체감했던 부분, *하드 코딩은 나쁘다..*
-- 
-- 
 
-    ![PostType](posttype.jpg)
+
+
+
+  ![PostType](posttype.jpg)
 
 
 - `getTotalArticleCount`: JpaRepository에서 count 기능이 보이길래 시험 삼아 작성해 보았는데 
