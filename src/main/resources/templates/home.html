@@ -17,7 +17,16 @@
     </div>
 </header>
 
-<h2>전체글 <span th:text="'[' + ${articleCount} + ']'"></span> </h2>
+<h2 style="display: inline-block;">전체글 <span th:text="'[' + ${articleCount} + ']'"></span> </h2>
+<div class="search-container">
+    <form th:action="@{/article/search}" method="get">
+        <label>
+            <input type="text" name="keyword" class="search-input" placeholder="검색어를 입력하세요">
+        </label>
+        <button type="submit" class="search-button">검색</button>
+    </form>
+</div>
+
 <div th:if="${#lists.isEmpty(article)}">
     <p>작성된 게시글이 없습니다.</p>
 </div>

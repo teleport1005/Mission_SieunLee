@@ -53,8 +53,10 @@ ul {
     resize: none; /* 크기 조절 불가능하도록 설정 */
 }
 .contentBox {
-    height: 300px;
+    display: flex;
+    flex-direction: column;
 }
+
 .header-link {
     display: flex;
     align-items: center;
@@ -81,11 +83,23 @@ ul {
     font-weight: bold;
 }
 
+.contentBox {
+    display: flex;
+    height: auto;
+    min-height: 300px;
+    max-height: 500px; /* 적절한 높이 설정 */
+    overflow: hidden; /* 내용이 초과할 경우 세로 스크롤 생성 */
+    flex-direction: column;
+}
 
-
-pre {
+.contentBox pre {
+    flex-grow: 1;
+    overflow: auto;
+    white-space: pre-wrap; /* 줄 바꿈 및 공백 유지 */
+    margin: 0;
     font-family: 'Your Font', sans-serif;
 }
+
 .comment-box {
     border: 1px solid #ccc;
     padding: 5px;
@@ -138,6 +152,35 @@ pre {
     display: flex;
     flex-wrap: wrap;
     gap: 20px; /* 각 요소 사이의 간격 조정 */
+}
+.board-category {
+    display: inline-block;
+    margin-right: 10px; /* 원하는 여백 조절 */
+}
+
+.board-description {
+    font-size: 80%;
+    color: rgb(128,128,128);
+}
+
+
+.search-container {
+    max-width: 300px;
+    text-align: left;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.search-input {
+    width: 60%;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.search-button {
+    padding: 5px;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 

@@ -8,6 +8,9 @@ import com.example.forum.repo.ArticleRepository;
 import com.example.forum.repo.BoardRepository;
 import com.example.forum.repo.PostTypeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,17 +79,32 @@ public class ArticleService {
         return optionalArticle.orElse(null);
     }
 
+    // 전체글 표시
     public List<Article> readAllArticle() {
         return articleRepository.findAll();
     }
 
+    // 게시판별 게시글 표시
     public List<Article> readArticlesByBoardId(Long boardId) {
         return articleRepository.findArticleByBoardId(boardId);
     }
+    public List<Article> readArticlesByBoardIdAtHome(Long boardId) {
+        return articleRepository.findByBoardIdOrderByIdDesc(boardId);
+    }
 
 
+    // 전체글 개수 표시
     public Long getTotalArticleCount() {
         return articleRepository.count();
+    }
+
+    // 글 제목으로 검색하는 기능
+    public List<Article> findByTitleOrContents(String keyword) {
+        try {
+            return articleRepository.findByTitleOrContents(keyword);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("검색 결과가 없습니다", e);
+        }
     }
 
 }

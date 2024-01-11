@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -22,6 +24,17 @@ public class BoardController {
 
     @GetMapping
     public String readAll(Model model) {
+        List<Board> boards = boardService.readAllBoard();
+        List<Article> allArticles = new ArrayList<>();
+
+        for (Board board : boards) {
+            List<Article> articles = articleService.readArticlesByBoardId(board.getId());
+            allArticles.addAll(articles);
+        }
+
+        // 모든 게시글을 역순으로 정렬
+        Collections.reverse(allArticles);
+        model.addAttribute("articles", allArticles);
         model.addAttribute("board", boardService.readAllBoard());
         model.addAttribute("postType", postTypeService.readAllPostType());
         return "home";
@@ -34,6 +47,7 @@ public class BoardController {
             Model model
     ) {
         List<Article> articles = articleService.readArticlesByBoardId(id);
+        Collections.reverse(articles);
         model.addAttribute("articles", articles);
         model.addAttribute("board", boardService.readBoard(id));
         model.addAttribute("postType", postTypeService.readAllPostType());

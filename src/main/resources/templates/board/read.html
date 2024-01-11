@@ -18,16 +18,16 @@
 </header>
 
 <div class="board-content">
-    <h3 th:text="'🎱 ' + ${board.category}">
-    </h3>
-    <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${board.description}"></span>
+    <h3 class="board-category" th:text="'🎱 ' + ${board.category}"></h3>
+    <span class="board-description" th:text="${board.description}"></span>
+</div>
     <div class="button-container">
-        <button th:onclick="|window.location.href='/article/write-view/${board.id}'|" >글쓰기</button>
+        <button th:onclick="|window.location.href='/article/write-view/${board.id}'|">글쓰기</button>
     </div>
     <hr>
     <div th:if="${not #lists.isEmpty(board.articleList)}">
         <ul>
-            <li th:each="article : ${board.articleList}">
+            <li th:each="article : ${articles}">
                 <div class="article-title-box" th:onclick="|window.location.href='/article/read/${article.id}'|">
                     <p>
                         <span style="font-size: 80%;" th:text="'000' + ${article.id}"></span>

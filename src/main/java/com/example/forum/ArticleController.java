@@ -58,7 +58,9 @@ public class ArticleController {
     @GetMapping("/home")
     public String readAll(Model model) {
         List<Article> articles = articleService.readAllArticle();
-        Collections.reverse(articles);
+        Collections.reverse(articles); // 역순으로 보여져야 함
+
+
         Long articleCount = articleService.getTotalArticleCount();
         model.addAttribute("articleCount", articleCount);
 
@@ -130,6 +132,24 @@ public class ArticleController {
         articleService.deleteArticle(id, password);
         return "redirect:/article/home";
     }
+
+    @GetMapping("search")
+    public String findByTitleOrContents(
+            @RequestParam(value = "keyword")
+            String keyword,
+            Model model
+    ) {
+        try {
+            List<Article> articlesPage = articleService.findByTitleOrContents(keyword);
+            model.addAttribute("articleList", articlesPage);
+            return "article/search";
+        } catch (IllegalArgumentException e) {
+            return "article/search";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+
 
 
 

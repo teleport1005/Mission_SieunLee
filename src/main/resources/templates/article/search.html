@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+</head>
+<body>
+<header>
+    <div class="header-bg">
+        <a href="/article/home" class="header-link">
+            <div class="row">
+                💈 익명 게시판
+            </div>
+        </a>
+    </div>
+</header>
+<div th:if="${not #lists.isEmpty(articleList)}">
+    <h3>검색 결과 </h3>
+    <button onclick="window.history.go(-1);">뒤로가기</button>
+    <ul>
+        <li th:each="article : ${articleList}">
+            <div class="article-title-box" th:onclick="|window.location.href='/article/read/${article.id}'|">
+                <p>
+                    <span style="font-size: 80%;" th:text="'000' + ${article.id}"></span>
+                    <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${article.board.category}"></span>
+                    <span style="font-size: 80%; color: rgb(128,128,128);" th:text="${article.postType.postType}"></span>
+                    <a th:text="${article.title}">[[${article.title}]]</a>
+                </p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div th:if="${#lists.isEmpty(articleList)}">
+    <p>검색 결과가 없습니다. 😅</p>
+    <button onclick="window.history.go(-1);">뒤로가기</button>
+</div>
+</body>
+</html>
